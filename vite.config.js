@@ -9,7 +9,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                // 'resources/js/digital-persona-bundle.js',
+                'resources/js/digital-persona-bundle.js',
                 'resources/js/persona.js',
                 'resources/js/customFingerprint.js',
                 'resources/js/registerFingerprint.js'
@@ -17,7 +17,7 @@ export default defineConfig({
             refresh: true,
         }),
         commonjs({
-            include: ['@digitalpersona/core'], // Add libraries using require()
+            // include: ['@digitalpersona/core'], // Add libraries using require()
         }),
     ],
     resolve: {

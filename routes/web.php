@@ -80,9 +80,10 @@ Route::middleware('auth')->group(function () {
     });
 
     // EMPLOYEES TIMESHEETS
-    Route::group(['prefix' => 'employees-timesheet'], function(){
-        Route::get('/', function(){ return view('entries.index'); })->name('employees-timesheet.index');
-        Route::get('/view', [])->name('employees-timesheet.views');
+    Route::group(['prefix' => 'employees-timesheet'], function () {
+        # pages
+        Route::get('/', [EntryController::class, 'index'])->name('employee-time-sheet-logs');
+
     });
 });
 

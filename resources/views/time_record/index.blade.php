@@ -1,10 +1,10 @@
 <x-guest-layout>
 
     <script src="{{ asset('js/shim.js') }}"></script>
-    <script src="{{ asset('js/websdk.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ifvisible/1.0.6/ifvisible.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/async/3.2.4/async.min.js"></script>
 
+    {{-- <script src="{{ asset('js/websdk.js') }}"></script> --}}
     @vite(['resources/js/customFingerprint.js'])
 
     <div class="flex overflow-y-auto flex-col md:flex-row">

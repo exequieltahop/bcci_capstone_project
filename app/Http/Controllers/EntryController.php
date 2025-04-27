@@ -16,10 +16,15 @@ class EntryController extends Controller
      */
     public function index()
     {
-        $entries = Entry::where('user_id', Auth::id())
-            ->orderBy('clock_in', 'desc')
-            ->paginate(10);
+        if(auth()->user()->role->name == "admin"){
+            $entries = Entry::all();
+        }else{
+            $entries = Entry::where('user_id', Auth::id())
+                ->orderBy('clock_in', 'desc')
+                ->paginate(10);
+        }
 
+        // dd($entries);
         return view('entries.index', compact('entries'));
     }
 
@@ -122,7 +127,7 @@ class EntryController extends Controller
     {
         $user = User::where('employee_code', $request->employee_code)->first();
 
-        if(!$user) {
+        if (!$user) {
             return response()->json(['success' => false, 'message' => 'Employee not found!']);
         }
 
@@ -133,7 +138,7 @@ class EntryController extends Controller
 
         $state = (isset($entry) && empty($entry?->clock_out)) ? 'clock out' : 'clock in';
 
-        if($state == 'clock out') {
+        if ($state == 'clock out') {
             $entry = (new UserClocksOut)->execute($user, ['clock_out' => Carbon::now()]);
         } else {
             $entry = (new UserClocksIn)->execute($user);

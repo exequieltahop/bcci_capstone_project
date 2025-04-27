@@ -24,7 +24,7 @@ class DashboardController extends Controller
             ->whereDay('clock_in', Carbon::now()->day)
             ->get()
             ->count();
-        
+
         $state              = (isset($entry) && empty($entry->clock_out)) ? 'clock out' : 'clock in';
         $hasClockedOutToday = !empty($entry->clock_out);
 
