@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class EntryController extends Controller
 {
@@ -16,16 +17,49 @@ class EntryController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->role->name == "admin"){
-            $entries = Entry::all();
-        }else{
+        if (auth()->user()->role->name == "admin") {
+            // $entries = Entry::join('users', 'entries.user_id', '=', 'users.id')
+            //     ->select([
+            //         'entries.*',
+            //         'users.first_name',
+            //         'users.last_name',
+            //     ])
+            //     ->get()
+            //     ->map(function($item){
+            //         $item->user_enc_id = Crypt::encrypt($item->user_id);
+            //         $item->entry_enc_id = Crypt::encrypt($item->id);
+            //         return $item;
+            //     });
+
+            $entries = User::whereNot('role_id', 2)
+                ->get()
+                ->map(function ($item) {
+                    $item->enc_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
+        } else {
             $entries = Entry::where('user_id', Auth::id())
                 ->orderBy('clock_in', 'desc')
                 ->paginate(10);
         }
 
-        // dd($entries);
         return view('entries.index', compact('entries'));
+    }
+
+    // view empl time sheet logs
+    public function viewEmployeeLogs($id)
+    {
+        try {
+            $dec_id = Crypt::decrypt($id);
+
+            $entries = Entry::where('user_id', $dec_id)
+                ->orderBy('clock_in', 'desc')
+                ->get();
+
+            return view('entries.employee-timesheet-logs', compact('entries'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

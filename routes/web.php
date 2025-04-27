@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'employees-timesheet'], function () {
         # pages
         Route::get('/', [EntryController::class, 'index'])->name('employee-time-sheet-logs');
+        Route::get('/view/{id}', [EntryController::class, 'viewEmployeeLogs'])->name('view-employee-time-sheet-logs');
 
     });
 });

@@ -22,36 +22,21 @@
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-primary text-white border-b">
-                            <th class="px-4 py-3">Date</th>
-                            <th class="px-4 py-3">Clock In/Out</th>
-                            <th class="px-4 py-3">Tardiness (mins)</th>
-                            <th class="px-4 py-3">Undertime (mins)</th>
-                            <th class="px-4 py-3">Hours Worked</th>
-                            {{-- <th class="px-4 py-3">Status</th> --}}
+                            <th class="px-4 py-3">No</th>
+                            <th class="px-4 py-3">Name</th>
+                            <th class="px-4 py-3 text-end">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y">
+                    <tbody class="bg-white divide-y align-middle">
                         @foreach($entries as $entry)
                             <tr class="text-gray-700">
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $entry->clock_in->format('d-M-Y') }}
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$entry->first_name . ' ' .$entry->last_name}}</td>
+                                <td class="px-4 py-3 text-sm text-end">
+                                    <a href="/employees-timesheet/view/{{$entry->enc_id}}" class="" style="text-decoration: none;">
+                                        <i class="bi bi-eye text-info" style="font-style: normal;"> View</i>
+                                    </a>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span class="block">In: {{ $entry->clock_in->format('h:i a') }}</span>
-                                    <span class="block">Out: {{ $entry->clock_out?->format('h:i a') }}</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $entry->tardiness }}
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $entry->undertime }}
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $entry->hours_worked }}
-                                </td>
-                                {{-- <td class="px-4 py-3 text-sm">
-
-                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

@@ -143,10 +143,9 @@
                     {{ __('Employees') }}
                 </x-nav-link>
             </li>
-
             {{-- EMPLOYEES TIMESHEETS --}}
-            <li class="relative px-6 py-3 @if(request()->routeIs('employee-time-sheet-logs')) bg-white shadow-lg rounded @endif">
-                <x-nav-link href="{{ route('employee-time-sheet-logs') }}" :active="request()->routeIs('employee-time-sheet-logs')">
+            <li class="relative px-6 py-3 @if(str_contains(Route::currentRouteName(), 'employee-time-sheet-logs')) bg-white shadow-lg rounded @endif">
+                <x-nav-link href="{{ route('employee-time-sheet-logs') }}" :active="str_contains(Route::currentRouteName(), 'employee-time-sheet-logs')">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
